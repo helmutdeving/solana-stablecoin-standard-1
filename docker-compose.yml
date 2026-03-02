@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  # ─── Mint/Burn REST API ──────────────────────────────────────────────────────
+  mint-burn:
+    build:
+      context: ./services/mint-burn
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - SOLANA_RPC=${SOLANA_RPC:-https://api.devnet.solana.com}
+      - KEYPAIR_PATH=/secrets/authority.json
+      - MINT_ADDRESS=${MINT_ADDRESS}
+    volumes:
+      - ${HOME}/.config/solana:/secrets:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ─── Event Listener ──────────────────────────────────────────────────────────
+  event-listener:
+    build:
+      context: ./services/event-listener
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    environment:
+      - PORT=3002
+      - SOLANA_RPC_WS=${SOLANA_RPC_WS:-wss://api.devnet.solana.com}
+      - PROGRAM_ID=${PROGRAM_ID:-SSSxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx}
+      - WEBHOOK_URL=${WEBHOOK_URL:-}
+    restart: unless-stopped
+
+  # ─── Compliance Module (SSS-2 only) ──────────────────────────────────────────
+  compliance:
+    build:
+      context: ./services/compliance
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3003"
+    environment:
+      - PORT=3003
+      - SOLANA_RPC=${SOLANA_RPC:-https://api.devnet.solana.com}
+      - KEYPAIR_PATH=/secrets/authority.json
+      - MINT_ADDRESS=${MINT_ADDRESS}
+    volumes:
+      - ${HOME}/.config/solana:/secrets:ro
+    restart: unless-stopped
