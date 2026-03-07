@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 14px;
+  }
+
+  body {
+    @apply bg-surface-900 text-slate-200 font-sans antialiased;
+    margin: 0;
+    min-height: 100vh;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-surface-800;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border rounded;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-500;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-surface-800 border border-border rounded-xl p-4;
+  }
+
+  .badge-green {
+    @apply inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20;
+  }
+
+  .badge-yellow {
+    @apply inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20;
+  }
+
+  .badge-red {
+    @apply inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-red-500/10 text-red-400 border border-red-500/20;
+  }
+
+  .badge-blue {
+    @apply inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20;
+  }
+
+  .badge-purple {
+    @apply inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20;
+  }
+
+  .stat-value {
+    @apply text-2xl font-bold text-white tabular-nums;
+  }
+
+  .stat-label {
+    @apply text-xs text-slate-500 uppercase tracking-wider;
+  }
+
+  .input {
+    @apply w-full bg-surface-700 border border-border rounded-lg px-3 py-2 text-sm text-white placeholder-slate-600
+           focus:outline-none focus:border-solana-purple focus:ring-1 focus:ring-solana-purple/30
+           transition-colors;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium
+           bg-solana-purple hover:bg-purple-500 text-white rounded-lg transition-colors
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium
+           bg-surface-700 hover:bg-surface-600 text-slate-200 border border-border rounded-lg transition-colors
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium
+           bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-lg transition-colors
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .mono {
+    @apply font-mono text-xs text-slate-400;
+  }
+}

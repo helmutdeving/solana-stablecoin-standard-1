@@ -1,0 +1,4 @@
+# Override linker for host target (proc-macro compilation)
+# The platform-tools lld crashes under QEMU/ARM emulation; use ld.gold instead.
+[target.x86_64-unknown-linux-gnu]
+rustflags = ["-C", "link-arg=-fuse-ld=gold"]

@@ -1,0 +1,36 @@
+[fuzz]
+# Run fuzzing with statistics output
+fuzzing_with_stats = true
+
+# Allow same instruction to appear multiple times in a sequence
+allow_duplicate_txs = true
+
+# Maximum instructions per fuzz iteration
+max_instructions_per_iteration = 10
+
+# Accounts reused across transactions in the same fuzzing iteration
+reuse_accounts = true
+
+# ─── Fuzz Target 0: SSS-1 Core Invariants ────────────────────────────────────
+# Fuzzes: initializeSss1, mintTokens, burnTokens, transferTokens
+# Invariants: supply_cap never exceeded, circulating_supply = minted - burned
+[[target]]
+path = "trident-tests/fuzz_tests/fuzz_0"
+name = "fuzz_0"
+
+# ─── Fuzz Target 1: SSS-2 Compliance Invariants ──────────────────────────────
+# Fuzzes: initializeSss2, whitelistAdd, whitelistRemove, freezeAccount,
+#         unfreezeAccount, seizeFunds, mintTokens (with whitelist checks)
+# Invariants: frozen accounts cannot transfer, non-whitelisted cannot mint/transfer
+[[target]]
+path = "trident-tests/fuzz_tests/fuzz_1"
+name = "fuzz_1"
+
+# ─── Fuzz Target 2: SSS-3 Allowlist Invariants ───────────────────────────────
+# Fuzzes: initializeSss3, allowlistAdd, allowlistRemove, transferSss3,
+#         confidentialMintSss3
+# Invariants: non-allowlisted cannot send/receive when enforcement enabled,
+#             expired records rejected
+[[target]]
+path = "trident-tests/fuzz_tests/fuzz_2"
+name = "fuzz_2"
